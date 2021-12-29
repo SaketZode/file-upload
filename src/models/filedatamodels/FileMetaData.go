@@ -2,7 +2,6 @@ package filedatamodels
 
 import (
 	"file-upload/databaseconnection/postresdb"
-	"fmt"
 )
 
 type FileMetaData struct {
@@ -13,10 +12,9 @@ type FileMetaData struct {
 const ()
 
 func (filemetadata *FileMetaData) Save() error {
-	queryInsert := "INSERT INTO file_data(\"file_name\", \"content_type\") VALUES(\"" + filemetadata.FileName + "\",\"" + filemetadata.ContentType + "\")"
-	fmt.Println(queryInsert)
+	queryInsert := `insert into "file_data"("file_name", "content_type") values($1, $2)`
 
-	_, insErr := postresdb.Client.Exec(queryInsert)
+	_, insErr := postresdb.Client.Exec(queryInsert, filemetadata.FileName, filemetadata.ContentType)
 	if insErr != nil {
 		return insErr
 	}

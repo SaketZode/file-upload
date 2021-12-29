@@ -70,7 +70,7 @@ func UploadFile(w http.ResponseWriter, r *http.Request) {
 
 	//persisting file meta-data to database
 	if err := filedata.Save(); err != nil {
-		fmt.Println(err)
+		fmt.Println("Save error:", err)
 		fmt.Fprintf(w, "Internal server error!!")
 		return
 	}
